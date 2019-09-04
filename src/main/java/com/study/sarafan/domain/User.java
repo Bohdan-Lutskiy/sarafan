@@ -3,12 +3,13 @@ package com.study.sarafan.domain;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
 @Table(name = "usr")
-public class User {
+public class User implements Serializable {
 
     @Id
     private String id;
