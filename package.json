@@ -2,16 +2,15 @@
   "name": "sarafan2.0",
   "version": "1.0.0",
   "main": "index.js",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/bum240798/sarafan.git"
-  },
+  "repository": "git+https://github.com/bum240798/sarafan.git",
   "author": "monst <monster240798@gmail.com>",
   "license": "MIT",
   "scripts": {
     "start": "webpack-dev-server"
   },
   "dependencies": {
+    "@stomp/stompjs": "^5.4.2",
+    "sockjs-client": "^1.4.0",
     "vue": "^2.6.10",
     "vue-resource": "^1.5.1"
   },
