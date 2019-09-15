@@ -1,17 +1,20 @@
 <template>
     <v-app>
         <v-app-bar app>
-            Sarafan
-            {{profile.name}}
-            <a href="/logout">Logout</a>
+            <v-toolbar-title>Sarafan</v-toolbar-title>
+            <div class="flex-grow-1"></div>
+            <span v-if="profile">{{profile.name}}</span>
+            <v-btn v-if="profile" icon href="/logout">
+                <v-icon>exit_to_app</v-icon>
+            </v-btn>
         </v-app-bar>
         <v-content>
-            <div v-if="!profile">You need login through
+            <v-container v-if="!profile">You need login through
                 <a href="/login">Google</a>
-            </div>
-            <div>
+            </v-container>
+            <v-container v-if="profile">
                 <messages-list :messages="messages"/>
-            </div>
+            </v-container>
         </v-content>
     </v-app>
 </template>
