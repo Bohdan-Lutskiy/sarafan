@@ -28,6 +28,7 @@
 
     export default {
         name: "Media",
+
         components: { YouTube },
         props: ['message'],
         data() {

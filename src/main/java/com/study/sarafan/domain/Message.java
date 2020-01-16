@@ -118,6 +118,7 @@ public class Message {
 
     public void setComments(List<Comment> comments) {
         this.comments = comments;
+
     }
 
     @Override

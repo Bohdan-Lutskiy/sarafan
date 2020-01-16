@@ -63,6 +63,7 @@ public class MessageController {
         message.setCreationDate(LocalDateTime.now());
         fillMeta(message);
         message.setAuthor(user);
+
         Message updatedMessage = messageRepo.save(message);
 
         wsSender.accept(EventType.CREATE, updatedMessage);
