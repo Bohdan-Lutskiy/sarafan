@@ -28,7 +28,7 @@
 
     export default {
         name: "Media",
-        comments: {YouTube},
+        components: { YouTube },
         props: ['message'],
         data() {
             return {
@@ -36,7 +36,7 @@
             }
         },
         beforeMount() {
-            if (this.message.link.indexOf('youtube') > -1) {
+            if (this.message.link.indexOf('youtu') > -1) {
                 this.type = 'youtube'
             } else if (this.message.link.match(/\.(jpeg|jpg|gif|png)$/) !== null) {
                 this.type = 'image'
