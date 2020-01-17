@@ -2,24 +2,36 @@ package com.study.sarafan.service;
 
 import com.study.sarafan.domain.Comment;
 import com.study.sarafan.domain.User;
+import com.study.sarafan.domain.Views;
+import com.study.sarafan.dto.EventType;
+import com.study.sarafan.dto.ObjectType;
 import com.study.sarafan.repo.CommentRepo;
+import com.study.sarafan.util.WsSender;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.function.BiConsumer;
 
 @Service
 public class CommentService {
 
     private final CommentRepo commentRepo;
+    private final BiConsumer<EventType, Comment> wsSender;
+
 
     @Autowired
-    public CommentService(CommentRepo commentRepo) {
+    public CommentService(CommentRepo commentRepo, WsSender wsSender) {
         this.commentRepo = commentRepo;
+        this.wsSender = wsSender.getSender(ObjectType.COMMENT, Views.FullComment.class);
+
     }
 
-    public Comment create(Comment comment, User user){
+    public Comment create(Comment comment, User user) {
         comment.setAuthor(user);
-        commentRepo.save(comment);
+        Comment commentFromDb = commentRepo.save(comment);
 
-        return comment;
+        wsSender.accept(EventType.CREATE, commentFromDb);
+
+        return commentFromDb;
     }
 }
