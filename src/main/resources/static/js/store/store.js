@@ -1,13 +1,14 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import messagesApi from 'api/messages'
-import commentApi from 'api/comment';
+import commentApi from 'api/comment'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
     state: {
         messages,
+        profile,
         ...frontendData
     },
     getters: {
@@ -57,20 +58,20 @@ export default new Vuex.Store({
                 ]
             }
         },
-        addMessagePageMutation(state, messages){
+        addMessagePageMutation(state, messages) {
             const targetMessages = state.messages
                 .concat(messages)
-                .reduce((res, val) =>{
+                .reduce((res, val) => {
                     res[val.id] = val
                     return res
                 }, {})
 
             state.messages = Object.values(targetMessages)
         },
-        updateTotalPagesMutation(state, totalPages){
+        updateTotalPagesMutation(state, totalPages) {
             state.totalPages = totalPages
         },
-        updateCurrentPageMutation(state, currentPage){
+        updateCurrentPageMutation(state, currentPage) {
             state.currentPage = currentPage
         }
     },
@@ -111,6 +112,5 @@ export default new Vuex.Store({
             commit('updateTotalPagesMutation', data.totalPages)
             commit('updateCurrentPageMutation', Math.min(data.currentPage, data.totalPages - 1))
         }
-
     }
 })

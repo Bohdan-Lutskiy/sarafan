@@ -19,7 +19,7 @@ import java.io.IOException;
 @RestController
 @RequestMapping("/message")
 public class MessageController {
-    public static final int MESSAGE_PER_PAGE = 3;
+    public static final int MESSAGES_PER_PAGE = 3;
 
     private final MessageService messageService;
 
@@ -32,7 +32,7 @@ public class MessageController {
     @GetMapping
     @JsonView(Views.FullMessage.class)
     public MessagePageDto list(
-            @PageableDefault(size = MESSAGE_PER_PAGE, sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable
+            @PageableDefault(size = MESSAGES_PER_PAGE, sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable
     ) {
         return messageService.findAll(pageable);
     }
