@@ -1,6 +1,9 @@
 package com.study.sarafan.domain;
 
-import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonView;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -9,10 +12,7 @@ import java.util.Objects;
 
 @Entity
 @Table
-@JsonIdentityInfo(
-        property = "id",
-        generator = ObjectIdGenerators.PropertyGenerator.class
-)
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
 public class Message {
 
     @Id
@@ -73,7 +73,8 @@ public class Message {
     }
 
     public void setCreationDate(LocalDateTime creationDate) {
-        this.creationDate = creationDate;    }
+        this.creationDate = creationDate;
+    }
 
     public String getLink() {
         return link;
@@ -142,11 +143,6 @@ public class Message {
         return "Message{" +
                 "id=" + id +
                 ", text='" + text + '\'' +
-                ", creationDate=" + creationDate +
-                ", link='" + link + '\'' +
-                ", linkTitle='" + linkTitle + '\'' +
-                ", linkDescription='" + linkDescription + '\'' +
-                ", linkCover='" + linkCover + '\'' +
                 '}';
     }
 }

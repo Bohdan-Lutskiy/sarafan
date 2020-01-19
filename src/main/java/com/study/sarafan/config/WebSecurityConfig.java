@@ -1,7 +1,7 @@
 package com.study.sarafan.config;
 
 import com.study.sarafan.domain.User;
-import com.study.sarafan.repo.UserDetailRepo;
+import com.study.sarafan.repo.UserDetailsRepo;
 import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -29,10 +29,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public PrincipalExtractor principalExtractor(UserDetailRepo userDetailRepo){
+    public PrincipalExtractor principalExtractor(UserDetailsRepo userDetailsRepo){
         return map -> {
             String id = (String) map.get("sub");
-            User user = userDetailRepo.findById(id)//we seek user in DB if we didn't find it there, then
+            User user = userDetailsRepo.findById(id)//we seek user in DB if we didn't find it there, then
                     .orElseGet(() ->{//go here and create new one
                 User newUser = new User();
 
@@ -46,9 +46,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 return newUser;
             });
 
-            user.setLocalVisit(LocalDateTime.now());
+            user.setLastVisit(LocalDateTime.now());
 
-            return userDetailRepo.save(user);
+            return userDetailsRepo.save(user);
         };
     }
 }
