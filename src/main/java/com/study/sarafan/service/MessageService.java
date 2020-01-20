@@ -15,7 +15,6 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -79,20 +78,21 @@ public class MessageService {
         messageRepo.delete(message);
         wsSender.accept(EventType.REMOVE, message);
     }
+
     private void fillMeta(Message message) throws IOException {
         String text = message.getText();
         Matcher matcher = URL_REGEX.matcher(text);
 
-        if (matcher.find()){
+        if (matcher.find()) {
             String url = text.substring(matcher.start(), matcher.end());
 
             matcher = IMG_REGEX.matcher(url);
 
             message.setLink(url);
 
-            if (matcher.find()){
+            if (matcher.find()) {
                 message.setLinkCover(url);
-            }else if(!url.contains("youtu")){
+            } else if (!url.contains("youtu")) {
                 MetaDto meta = getMeta(url);
 
                 message.setLinkCover(meta.getCover());
@@ -129,7 +129,7 @@ public class MessageService {
         channels.add(user);
 
         Page<Message> page = messageRepo.findByAuthorIn(channels, pageable);
-        
+
         return new MessagePageDto(
                 page.getContent(),
                 pageable.getPageNumber(),
