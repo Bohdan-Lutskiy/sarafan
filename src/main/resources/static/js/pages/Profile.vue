@@ -5,7 +5,7 @@
                 <div class="title mb-3">User profile</div>
                 <v-layout row justify-space-between>
                     <v-flex class="px-1">
-                        <v-img :src="profile.userpic"></v-img>
+                        <v-img :src="profile.userpic"/>
                     </v-flex>
                     <v-flex class="px-1">
                         <v-layout column>
@@ -13,8 +13,20 @@
                             <v-flex>{{profile.locale}}</v-flex>
                             <v-flex>{{profile.gender}}</v-flex>
                             <v-flex>{{profile.lastVisit}}</v-flex>
-                            <v-flex>{{profile.subscriptions && profile.subscriptions.length}} subscriptions</v-flex>
-                            <v-flex>{{profile.subscribers && profile.subscribers.length}} subscribers</v-flex>
+                            <v-flex>
+                                {{profile.subscriptions && profile.subscriptions.length}} subscriptions
+                            </v-flex>
+                            <router-link
+                                    v-if="isMyProfile"
+                                    :to="`/subscriptions/${profile.id}`"
+                            >
+                                {{profile.subscribers && profile.subscribers.length}} subscribers
+                            </router-link>
+                            <v-flex
+                                    v-else
+                            >
+                                {{profile.subscribers && profile.subscribers.length}} subscribers
+                            </v-flex>
                         </v-layout>
                     </v-flex>
                 </v-layout>
@@ -31,6 +43,7 @@
 
 <script>
     import profileApi from 'api/profile'
+
     export default {
         name: 'Profile',
         data() {
@@ -62,8 +75,10 @@
             },
             async updateProfile() {
                 const id = this.$route.params.id || this.$store.state.profile.id
+
                 const data = await profileApi.get(id)
                 this.profile = await data.json()
+
                 this.$forceUpdate()
             }
         },
