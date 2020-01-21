@@ -29,3 +29,7 @@ build/
 
 ### VS Code ###
 .vscode/
+
+node_modules
+##вказує шо цей код не буде зберігатися в гіті
+/src/main/resources/static/js/
